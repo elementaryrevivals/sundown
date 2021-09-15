@@ -8,11 +8,17 @@ using Gtk;
 using Gee;
 
 public class Sundown : Gtk.Application {
+    Gtk.CssProvider css_provider;
     public static Gtk.Scale slider;
     public static Gtk.Scale slider1;
     public static Gtk.Scale slider2;
     public static Gtk.Scale slider3;
     public static Gtk.Scale slider4;
+
+    public static Knob knob;
+    public static Knob knob1;
+    public static Knob knob2;
+    public static Knob knob3;
 
     public static Label label1;
     public static Label label2;
@@ -32,14 +38,31 @@ public class Sundown : Gtk.Application {
     }
 
     protected override void activate () {
+        var header_bar = new Gtk.HeaderBar ();
+        //header_bar.set_decoration_layout ("default-decoration");
+        header_bar.set_show_close_button (true);
+        header_bar.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+        header_bar.get_style_context ().add_class ("default-decoration");
+        header_bar.set_title ("Sundown");
+        if (css_provider == null) {
+            css_provider = new Gtk.CssProvider ();
+            css_provider.load_from_resource ("/com/github/elementaryrevivals/sundown/Application.css");
+            // CSS Provider
+            Gtk.StyleContext.add_provider_for_screen (
+                Gdk.Screen.get_default (),
+                css_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+        }
         Window window = new Gtk.ApplicationWindow (this);
-        window.title = "Sundown";
+        window.set_titlebar (header_bar);
         window.window_position = WindowPosition.CENTER;
         window.set_decorated (true);
         window.set_deletable (true);
         window.set_resizable (false);
         window.destroy.connect (Gtk.main_quit);
         window.border_width = 20;
+        window.get_style_context ().add_class ("rounded");
 
         var vbox_main = new Box (Orientation.VERTICAL, 0);
         vbox_main.homogeneous = false;
@@ -72,6 +95,8 @@ public class Sundown : Gtk.Application {
         //this is my main slider
         slider = new Scale.with_range (Orientation.HORIZONTAL, 40, 150, 1);
         slider.set_size_request (380, 50);
+        knob = new Knob ();
+        knob.set_size_request (102, 102);
 
         if (lines.size > 1) {
             var hbox_all = new Box (Orientation.HORIZONTAL, 0);
@@ -86,6 +111,7 @@ public class Sundown : Gtk.Application {
             switcher.state_flags_changed.connect (() => {
                 if (switcher.active == true) {
                     slider.visible = true;
+                    knob.visible = true;
                     vbox_ind.visible = false;
 
                     //initialization
@@ -93,6 +119,7 @@ public class Sundown : Gtk.Application {
                 }
                 else {
                     slider.visible = false;
+                    knob.visible = false;
                     vbox_ind.visible = true;
 
                     //initialization
@@ -227,7 +254,7 @@ public class Sundown : Gtk.Application {
         });
 
         //.v.positioning
-        vbox_main.add (slider);
+        vbox_main.add (knob);
 
         if (lines.size > 1) {
             for (int i = 0; i < lines.size; i++) {
