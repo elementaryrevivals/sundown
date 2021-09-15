@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>com.github.elementaryrevivals.sundown</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Sundown</name>
+  <developer_name>Elementary Revivals</developer_name>
+  <update_contact>allie@cloverleaf.app</update_contact>
+  <provides>
+    <binary>com.github.elementaryrevivals.sundown</binary>
+  </provides>
+  <url type="homepage">https://github.com/elementaryrevivals/sundown</url>
+  <url type="bugtracker">https://github.com/elementaryrevivals/sundown/issues</url>
+  <url type="help">https://github.com/elementaryrevivals/sundown</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/elementaryrevivals/sundown/master/data/screenshot.svg</image>
+    </screenshot>
+  </screenshots>
+  <summary>Change screen's brightness</summary>
+  <description>
+    <p>Instead of adjusting the backlight, this app uses `xrandr` to change the brightness of the image displayed on your screen.  This can be useful for displays without an adjustable backlight, displays with a too-bright minimum, or too-dark maximum backlight, or OLED displays. Setups with multipe displays (maximum 4 displays) can also be adjusted with different brightness levels.</p>
+  </description>
+  <categories>
+    <category>GTK</category>
+    <category>Utility</category>
+    <category>System</category>
+  </categories>
+  <releases>
+    <release version="1.4.30" date="2019-05-07" urgency="medium">
+      <description>
+        <ul>
+          <li>added auto-save for brightness preferences</li>
+          <li>small bugs fixed</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1" />
+</component>

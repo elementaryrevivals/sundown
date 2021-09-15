@@ -1,68 +1,63 @@
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/panosx2/brightness/blob/master/LICENSE)
-[![Build Status](https://travis-ci.com/panosx2/brightness.svg?branch=master)](https://travis-ci.com/panosx2/brightness)
-[![Donate](https://img.shields.io/badge/PayPal-Donate-gray.svg?style=flat&logo=paypal&colorA=0071bb&logoColor=fff)](https://www.paypal.me/PanagiotisPanos)
- 
- <p align="center">
-    <img src="https://github.com/panosx2/brightness/blob/master/icons/128/com.github.panosx2.brightness.png" alt="logo"> <br>
- </p>
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/elementaryrevivals/sundown/blob/master/LICENSE)
 
- <div>
-  <h1 align="center">Dimmer</h1>
+<p align="center">
+<img src="https://github.com/elementaryrevivals/sundown/blob/master/icons/128/com.github.elementaryrevivals.sundown.svg" alt="logo"> <br>
+</p>
+
+<div>
+  <h1 align="center">Sundown</h1>
   <h3 align="center"><i>Brightness Adjustment App, written in Vala</i></h3>
 </div>
 
 <p align="center">
-    <img src="https://github.com/panosx2/brightness/blob/master/data/screenshot.png" alt="Screenshot"> <br>
+  <img src="https://github.com/elementaryrevivals/sundown/blob/master/data/screenshot.png" alt="Screenshot"> <br>
 </p>
 
- Instead of adjusting the backlight, this app uses `xrandr` to change the brightness of the image displayed on your screen. This can be useful for displays without an adjustable backlight, displays with a too-bright minimum, or too-dark maximum backlight, or OLED displays. Setups with multipe displays (maximum 4 displays) can also be adjusted with different brightness levels.
+Instead of adjusting the backlight, this app uses `xrandr` to change the brightness of the image displayed on your screen. This can be useful for displays without an adjustable backlight, displays with a too-bright minimum, or too-dark maximum backlight, or OLED displays. Setups with multipe displays (maximum 4 displays) can also be adjusted with different brightness levels.
 
- ## Install from AppCenter 
- On elementaryOS simply install Dimmer from AppCenter:
- <p align="center">
-   <a href="https://appcenter.elementary.io/com.github.panosx2.brightness">
-     <img src="https://appcenter.elementary.io/badge.svg" alt="Get it on AppCenter">
-   </a>
- </p>
+<!-- ## Install from AppCenter
+On elementaryOS simply install Sundown from AppCenter:
+<p align="center">
+  <a href="https://appcenter.elementary.io/com.github.elementaryrevivals.sundown">
+    <img src="https://appcenter.elementary.io/badge.svg" alt="Get it on AppCenter">
+  </a>
+</p>
 
- ### or
+### or -->
 
- ## Build and Install manually
- 
- These dependencies must be present before building:
+## Build and Install manually
 
- * debhelper
- * gettext
- * libgranite-dev
- * libgtk-3-dev
- * libgee-0.8-dev
- * meson
- * valac
- 
- <p>You can install these by executing the command:</p>
- 
- ```
- sudo apt install meson valac libgranite-dev libgtk-3-dev libgee-0.8-dev gettext debhelper
- ```
- 
- <br>
- <b>Building</b>
- 
- ```
- meson build && cd build
- meson configure -Dprefix=/usr`
- ninja
- ```
+These dependencies must be present before building:
 
-<br>
-<b>Installing</b>
+* gettext
+* libgranite-dev
+* libgtk-3-dev
+* libgee-0.8-dev
+* meson
+* valac
+
+<p>You can install these by executing the command:</p>
 
 ```
+sudo apt install elementary-sdk meson ninja-build libgranite-dev libgee-0.8-dev
+```
+
+### Building from source
+
+```
+meson build --prefix=/usr
+cd build
 sudo ninja install
 ```
 
- ## Credits
- <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> (Licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY)</a></div>
- 
- ## Donations
-Stripe is not yet available in my country. If you like Dimmer and you want to support its development, consider donating via [PayPal](https://www.paypal.me/PanagiotisPanos)
+### Translation files
+```
+# after setting up meson build
+cd build
+
+# generates pot file
+ninja com.github.elementaryrevivals.sundown-pot
+
+# to regenerate and propagate changes
+ninja com.github.elementaryrevivals.sundown-update-po
+```

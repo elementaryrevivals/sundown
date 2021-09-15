@@ -1,14 +1,14 @@
-# French translations for com.github.panosx2.brightness package
-# Copyright (C) 2019 THE com.github.panosx2.brightness'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the com.github.panosx2.brightness package.
+# French translations for com.github.elementaryrevivals.sundown package
+# Copyright (C) 2019 THE com.github.elementaryrevivals.sundown'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.elementaryrevivals.sundown package.
 # NathanBnm, 2019.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: com.github.panosx2.brightness\n"
+"Project-Id-Version: com.github.elementaryrevivals.sundown\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-07 19:20+0200\n"
+"POT-Creation-Date: 2021-09-15 07:06+0100\n"
 "PO-Revision-Date: 2019-05-07 19:15+0200\n"
 "Last-Translator: NathanBnm\n"
 "Language-Team: Français\n"
@@ -17,20 +17,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/com.github.panosx2.brightness.appdata.xml.in:7
-#: data/com.github.panosx2.brightness.desktop.in:3
-msgid "Dimmer"
-msgstr "Dimmer"
+#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:6
+#: data/com.github.elementaryrevivals.sundown.desktop.in:3
+msgid "Sundown"
+msgstr "Sundown"
 
-#: data/com.github.panosx2.brightness.appdata.xml.in:8
-msgid "Panos P."
-msgstr "Panos P."
+#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:7
+msgid "Elementary Revivals"
+msgstr ""
 
-#: data/com.github.panosx2.brightness.appdata.xml.in:22
+#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:20
 msgid "Change screen's brightness"
 msgstr "Modifie la luminosité de l'écran"
 
-#: data/com.github.panosx2.brightness.appdata.xml.in:24
+#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:22
 msgid ""
 "Instead of adjusting the backlight, this app uses `xrandr` to change the "
 "brightness of the image displayed on your screen. This can be useful for "
@@ -46,23 +46,23 @@ msgstr ""
 "avec écrans multiples(4 écrans maximum) peuvent également être ajustés avec "
 "des niveaux de luminosité différents."
 
-#: data/com.github.panosx2.brightness.appdata.xml.in:35
+#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:33
 msgid "added auto-save for brightness preferences"
 msgstr "Ajout de la sauvegarde automatique des paramètres de luminosité"
 
-#: data/com.github.panosx2.brightness.appdata.xml.in:36
+#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:34
 msgid "small bugs fixed"
 msgstr "Corrections de bugs mineurs"
 
-#: data/com.github.panosx2.brightness.desktop.in:4
+#: data/com.github.elementaryrevivals.sundown.desktop.in:4
 msgid "Brightness Adjustment"
 msgstr "Ajustement de la luminosité"
 
-#: data/com.github.panosx2.brightness.desktop.in:7
-msgid "com.github.panosx2.brightness"
-msgstr "com.github.panosx2.brightness"
+#: data/com.github.elementaryrevivals.sundown.desktop.in:7
+msgid "com.github.elementaryrevivals.sundown"
+msgstr "com.github.elementaryrevivals.sundown"
 
-#: data/com.github.panosx2.brightness.desktop.in:10
+#: data/com.github.elementaryrevivals.sundown.desktop.in:10
 msgid ""
 "brightness;screen;monitor;change;light;eyes;dimmer;switch;OLED;backlight;"
 "display;xrandr;bright;multipe-monitors;dual-monitors;"
