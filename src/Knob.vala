@@ -23,18 +23,22 @@ public class Knob : Gtk.Overlay {
     private double dragging_direction;
 
     public double value = 27;
+    public int initial_value = 0;
     protected Gtk.Box knob_socket_graphic;
     protected Gtk.Box knob_cover;
     protected Gtk.Box knob_background;
     protected Gtk.Fixed fixed;
     protected int center;
 
+    private Gtk.Label knob_label_dark;
+    private Gtk.Label knob_label_light;
+
     protected const double RADIUS = 20;
 
     public signal void change_value (double value);
 
     public Knob () {
-        center = 45;
+        center = 42;
         knob_socket_graphic = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         knob_socket_graphic.width_request = 20;
         knob_socket_graphic.height_request = 20;
@@ -44,6 +48,7 @@ public class Knob : Gtk.Overlay {
         knob_cover.get_style_context ().add_class ("knob-cover-graphic");
         knob_cover.halign = Gtk.Align.START;
         knob_cover.valign = Gtk.Align.START;
+        knob_cover.margin = 14;
         knob_cover.width_request = 100;
         knob_cover.height_request = 100;
 
@@ -52,15 +57,30 @@ public class Knob : Gtk.Overlay {
         fixed.valign = Gtk.Align.START;
         fixed.width_request = 100;
         fixed.height_request = 100;
+        fixed.margin = 14;
         double px = RADIUS * GLib.Math.cos (value / Math.PI);
         double py = RADIUS * GLib.Math.sin (value / Math.PI);
         fixed.put (knob_socket_graphic, (int)(px + center), (int)(py + center));
 
         knob_background = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        knob_background.get_style_context ().add_class ("knob-meter-graphic");
         knob_background.halign = Gtk.Align.START;
         knob_background.valign = Gtk.Align.START;
-        knob_background.width_request = 100;
-        knob_background.height_request = 100;
+        knob_background.width_request = 128;
+        knob_background.height_request = 128;
+
+        knob_label_dark = new Gtk.Label (_("DARK"));
+        knob_label_dark.halign = Gtk.Align.START;
+        knob_label_dark.valign = Gtk.Align.END;
+        knob_label_dark.get_style_context ().add_class ("knob-meter-label");
+
+        knob_label_light = new Gtk.Label (_("LIGHT"));
+        knob_label_light.halign = Gtk.Align.END;
+        knob_label_light.valign = Gtk.Align.END;
+        knob_label_light.get_style_context ().add_class ("knob-meter-label");
+
+        knob_background.pack_start (knob_label_dark, true);
+        knob_background.pack_end (knob_label_light, true);
 
         var event_box = new Gtk.EventBox ();
         event_box.event.connect (handle_event);
@@ -74,7 +94,8 @@ public class Knob : Gtk.Overlay {
 
         this.hexpand = false;
         this.vexpand = true;
-        this.width_request = 58;
+        this.width_request = 128;
+        this.height_request = 128;
     }
 
     public void rotate_dial (double value) {
@@ -100,6 +121,7 @@ public class Knob : Gtk.Overlay {
         //  }
         if (event.type == Gdk.EventType.BUTTON_PRESS) {
             dragging = true;
+            initial_value = 0;
         }
         if (event.type == Gdk.EventType.BUTTON_RELEASE) {
             dragging = false;
@@ -114,23 +136,35 @@ public class Knob : Gtk.Overlay {
                 event.motion.y_root == 0 ||
                 event.motion.x_root == 0) {
                 value += 0.5;
+                initial_value += 1;
                 if (value < 27) {
                     value = 27;
                 }
                 if (value > 42) {
                     value = 42;
                 }
-                rotate_dial (value);
+                if (value > 33 && value < 37 && initial_value < 10) {
+                    value = 35.2;
+                    rotate_dial (value);
+                } else {
+                    rotate_dial (value);
+                }
                 dragging_direction = event.motion.y - event.motion.x;
             } else {
                 value -= 0.5;
+                initial_value -= 1;
                 if (value < 27) {
                     value = 27;
                 }
                 if (value > 42) {
                     value = 42;
                 }
-                rotate_dial (value);
+                if (value > 33 && value < 37 && initial_value > -10) {
+                    value = 35.2;
+                    rotate_dial (value);
+                } else {
+                    rotate_dial (value);
+                }
                 dragging_direction = event.motion.y - event.motion.x;
             }
         }

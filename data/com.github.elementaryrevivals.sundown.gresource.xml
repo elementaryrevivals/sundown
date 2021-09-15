@@ -3,4 +3,7 @@
   <gresource prefix="/com/github/elementaryrevivals/sundown">
     <file alias="Application.css">Application.css</file>
   </gresource>
+  <gresource prefix="/com/github/elementaryrevivals/sundown/images">
+    <file alias="knob_meter.svg" compressed="true" preprocess="xml-stripblanks">images/knob_meter.svg</file>
+  </gresource>
 </gresources>

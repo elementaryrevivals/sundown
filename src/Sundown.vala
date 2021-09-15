@@ -96,7 +96,6 @@ public class Sundown : Gtk.Application {
         slider = new Scale.with_range (Orientation.HORIZONTAL, 40, 150, 1);
         slider.set_size_request (380, 50);
         knob = new Knob ();
-        knob.set_size_request (102, 102);
 
         if (lines.size > 1) {
             var hbox_all = new Box (Orientation.HORIZONTAL, 0);
@@ -251,6 +250,21 @@ public class Sundown : Gtk.Application {
                     else if ((slider.adjustment.value / 100) < 0.6) slider.tooltip_text = "Too Dark";
                     else slider.tooltip_text = "";
             } catch (SpawnError se) {}
+        });
+        knob.change_value.connect ((value) => {
+            var val = 40 + ((150.0 - 40.0) * value);
+            //print ("%lf\n", val);
+            string edited = ((int)val / 100.0).to_string ();
+            Idle.add (() => {
+                try {
+                    for (int i = 0; i < lines.size; i++) GLib.Process.spawn_command_line_async ("xrandr --output " + lines.get (i) + " --brightness " + edited);
+                    //save_value (".dimmer_all_monitors.txt", edited);
+                    if (((int)val / 100.0) > 1.2) knob.tooltip_text = "Too Bright";
+                    else if (((int)val / 100.0) < 0.6) knob.tooltip_text = "Too Dark";
+                    else knob.tooltip_text = "";
+                } catch (SpawnError se) {}
+                return false;
+            });
         });
 
         //.v.positioning
