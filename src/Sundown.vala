@@ -6,19 +6,21 @@
 
 using Gtk;
 using Gee;
+GLib.Settings settings;
 
 public class Sundown : Gtk.Application {
     Gtk.CssProvider css_provider;
-    public static Gtk.Scale slider;
-    public static Gtk.Scale slider1;
-    public static Gtk.Scale slider2;
-    public static Gtk.Scale slider3;
-    public static Gtk.Scale slider4;
+    //  public static Gtk.Scale slider;
+    //  public static Gtk.Scale slider1;
+    //  public static Gtk.Scale slider2;
+    //  public static Gtk.Scale slider3;
+    //  public static Gtk.Scale slider4;
 
     public static Knob knob;
     public static Knob knob1;
     public static Knob knob2;
     public static Knob knob3;
+    public static Knob knob4;
 
     public static Label label1;
     public static Label label2;
@@ -38,8 +40,11 @@ public class Sundown : Gtk.Application {
     }
 
     protected override void activate () {
+        settings = new GLib.Settings ("com.github.elementaryrevivals.sundown");
+        init_theme ();
+        Gtk.Settings gsettings = Gtk.Settings.get_default ();
+        gsettings.gtk_application_prefer_dark_theme = false;
         var header_bar = new Gtk.HeaderBar ();
-        //header_bar.set_decoration_layout ("default-decoration");
         header_bar.set_show_close_button (true);
         header_bar.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
         header_bar.get_style_context ().add_class ("default-decoration");
@@ -62,12 +67,13 @@ public class Sundown : Gtk.Application {
         window.set_resizable (false);
         window.destroy.connect (Gtk.main_quit);
         window.border_width = 20;
+        window.width_request = 268;
         window.get_style_context ().add_class ("rounded");
 
         var vbox_main = new Box (Orientation.VERTICAL, 0);
         vbox_main.homogeneous = false;
 
-        var vbox_ind = new Box (Orientation.VERTICAL, 0);
+        var vbox_ind = new Box (Orientation.HORIZONTAL, 0);
         vbox_ind.homogeneous = false;
 
         string current_brightness, /*currentGm,*/ names;
@@ -92,9 +98,9 @@ public class Sundown : Gtk.Application {
 
         for (int i = 0; i < temp_lines.length; i++) if (temp_lines[i] != "") lines.add (temp_lines[i]);
 
-        //this is my main slider
-        slider = new Scale.with_range (Orientation.HORIZONTAL, 40, 150, 1);
-        slider.set_size_request (380, 50);
+        //this is my main knob
+        //  slider = new Scale.with_range (Orientation.HORIZONTAL, 40, 150, 1);
+        //  slider.set_size_request (380, 50);
         knob = new Knob ();
 
         if (lines.size > 1) {
@@ -109,7 +115,7 @@ public class Sundown : Gtk.Application {
             switcher.active = true;
             switcher.state_flags_changed.connect (() => {
                 if (switcher.active == true) {
-                    slider.visible = true;
+                    //  slider.visible = true;
                     knob.visible = true;
                     vbox_ind.visible = false;
 
@@ -117,7 +123,7 @@ public class Sundown : Gtk.Application {
                     set_value_for_all ();
                 }
                 else {
-                    slider.visible = false;
+                    //  slider.visible = false;
                     knob.visible = false;
                     vbox_ind.visible = true;
 
@@ -142,125 +148,103 @@ public class Sundown : Gtk.Application {
         for (int i = 0; i < lines.size; i++) monitors[i] = lines.get (i);
 
         if (lines.size > 1) {
-            //slider1
+            //knob1
             label1 = new Label (monitors[0]);
             label1.halign = Align.START;
 
-            slider1 = new Scale.with_range (Orientation.HORIZONTAL, 40, 150, 1);
-            slider1.set_size_request (380, 30);
-            slider1.adjustment.value_changed.connect (() => {
-                try {
-                        string edited = (slider1.adjustment.value / 100).to_string ();
-
-                        //if ((slider1.adjustment.value / 100) >= 1.0) {
-                            //GLib.Process.spawn_command_line_async("xrandr --output " + monitors[0] + " --gamma " + edited + ":" + edited + ":" + edited);
-                        //}
-                        //else
-                        GLib.Process.spawn_command_line_async ("xrandr --output " + monitors[0] + " --brightness " + edited);
-
-                        save_value (".dimmer_" + monitors[0] + ".txt", edited);
-
-                        if ((slider1.adjustment.value / 100) > 1.2) slider1.tooltip_text = "Too Bright";
-                        else if ((slider1.adjustment.value / 100) < 0.6) slider1.tooltip_text = "Too Dark";
-                        else slider1.tooltip_text = "";
-                } catch (SpawnError se) {}
+            knob1 = new Knob ();
+            knob1.change_value.connect ((value) => {
+                double val = (int)(40 + (110.0 * value)) / 100.0;
+                //print ("%lf\n", val);
+                Idle.add (() => {
+                    try {
+                        GLib.Process.spawn_command_line_async ("xrandr --output " + monitors[0] + " --brightness " + val.to_string ());
+                        settings.set_double ("monitors-1-brightness", value);
+                        if (val > 1.2) knob.tooltip_text = "Too Bright";
+                        else if (val < 0.6) knob.tooltip_text = "Too Dark";
+                        else knob.tooltip_text = "";
+                    } catch (SpawnError se) {}
+                    return false;
+                });
             });
-            slider1.set_margin_bottom (30);
-
-            //slider2
+            //knob2
             label2 = new Label (monitors[1]);
             label2.halign = Align.START;
 
-            slider2 = new Scale.with_range (Orientation.HORIZONTAL, 40, 150, 1);
-            slider2.set_size_request (380, 30);
-            slider2.adjustment.value_changed.connect (() => {
-                try {
-                    string edited = (slider2.adjustment.value / 100).to_string ();
-
-                    GLib.Process.spawn_command_line_async ("xrandr --output " + monitors[1] + " --brightness " + edited);
-
-                    save_value (".dimmer_" + monitors[1] + ".txt", edited);
-
-                    if ((slider2.adjustment.value / 100) > 1.2) slider2.tooltip_text = "Too Bright";
-                    else if ((slider2.adjustment.value / 100) < 0.6) slider2.tooltip_text = "Too Dark";
-                    else slider2.tooltip_text = "";
-                } catch (SpawnError se) {}
+            knob2 = new Knob ();
+            knob2.change_value.connect ((value) => {
+                double val = (int)(40 + (110.0 * value)) / 100.0;
+                //print ("%lf\n", val);
+                Idle.add (() => {
+                    try {
+                        GLib.Process.spawn_command_line_async ("xrandr --output " + monitors[1] + " --brightness " + val.to_string ());
+                        settings.set_double ("monitors-2-brightness", value);
+                        if (val > 1.2) knob.tooltip_text = "Too Bright";
+                        else if (val < 0.6) knob.tooltip_text = "Too Dark";
+                        else knob.tooltip_text = "";
+                    } catch (SpawnError se) {}
+                    return false;
+                });
             });
-            slider2.set_margin_bottom (30);
 
-            //slider3
+            //knob3
             label3 = new Label (monitors[2]);
             label3.halign = Align.START;
 
-            slider3 = new Scale.with_range (Orientation.HORIZONTAL, 40, 150, 1);
-            slider3.set_size_request (380, 30);
-            slider3.adjustment.value_changed.connect (() => {
-                try {
-                        string edited = (slider3.adjustment.value / 100).to_string ();
-
-                        GLib.Process.spawn_command_line_async ("xrandr --output " + monitors[2] + " --brightness " + edited);
-
-                        save_value (".dimmer_" + monitors[2] + ".txt", edited);
-
-                        if ((slider3.adjustment.value / 100) > 1.2) slider3.tooltip_text = "Too Bright";
-                        else if ((slider3.adjustment.value / 100) < 0.6) slider3.tooltip_text = "Too Dark";
-                        else slider3.tooltip_text = "";
-                } catch (SpawnError se) {}
+            knob3 = new Knob ();
+            knob3.change_value.connect ((value) => {
+                double val = (int)(40 + (110.0 * value)) / 100.0;
+                //print ("%lf\n", val);
+                Idle.add (() => {
+                    try {
+                        GLib.Process.spawn_command_line_async ("xrandr --output " + monitors[2] + " --brightness " + val.to_string ());
+                        settings.set_double ("monitors-3-brightness", value);
+                        if (val > 1.2) knob.tooltip_text = "Too Bright";
+                        else if (val < 0.6) knob.tooltip_text = "Too Dark";
+                        else knob.tooltip_text = "";
+                    } catch (SpawnError se) {}
+                    return false;
+                });
             });
-            slider3.set_margin_bottom (30);
 
-            //slider4
+            //knob4
             label4 = new Label (monitors[3]);
             label4.halign = Align.START;
 
-            slider4 = new Scale.with_range (Orientation.HORIZONTAL, 40, 150, 1);
-            slider4.set_size_request (380, 30);
-            slider4.adjustment.value_changed.connect (() => {
-                try {
-                        string edited = (slider4.adjustment.value / 100).to_string ();
-
-                        GLib.Process.spawn_command_line_async ("xrandr --output " + monitors[3] + " --brightness " + edited);
-
-                        save_value (".dimmer_" + monitors[3] + ".txt", edited);
-
-                        if ((slider4.adjustment.value / 100) > 1.2) slider4.tooltip_text = "Too Bright";
-                        else if ((slider4.adjustment.value / 100) < 0.6) slider4.tooltip_text = "Too Dark";
-                        else slider4.tooltip_text = "";
-                } catch (SpawnError se) {}
+            knob4 = new Knob ();
+            knob4.change_value.connect ((value) => {
+                double val = (int)(40 + (110.0 * value)) / 100.0;
+                //print ("%lf\n", val);
+                Idle.add (() => {
+                    try {
+                        GLib.Process.spawn_command_line_async ("xrandr --output " + monitors[3] + " --brightness " + val.to_string ());
+                        settings.set_double ("monitors-4-brightness", value);
+                        if (val > 1.2) knob.tooltip_text = "Too Bright";
+                        else if (val < 0.6) knob.tooltip_text = "Too Dark";
+                        else knob.tooltip_text = "";
+                    } catch (SpawnError se) {}
+                    return false;
+                });
             });
 
             //set the values at start (when more than 1 exists)
             set_values_for_every_monitor ();
 
-            if (slider1.get_value () != slider2.get_value ()) {
+            if (knob1.value != knob2.value) {
                 switcher.set_active (false);
             }
         }
 
-        //action for main slider
-        slider.adjustment.value_changed.connect (() => {
-            try {
-                    string edited = (slider.adjustment.value / 100).to_string ();
-
-                    for (int i = 0; i < lines.size; i++) GLib.Process.spawn_command_line_async ("xrandr --output " + lines.get (i) + " --brightness " + edited);
-
-                    save_value (".dimmer_all_monitors.txt", edited);
-
-                    if ((slider.adjustment.value / 100) > 1.2) slider.tooltip_text = "Too Bright";
-                    else if ((slider.adjustment.value / 100) < 0.6) slider.tooltip_text = "Too Dark";
-                    else slider.tooltip_text = "";
-            } catch (SpawnError se) {}
-        });
+        //action for main knob
         knob.change_value.connect ((value) => {
-            var val = 40 + ((150.0 - 40.0) * value);
+            double val = (int)(40 + (110.0 * value)) / 100.0;
             //print ("%lf\n", val);
-            string edited = ((int)val / 100.0).to_string ();
             Idle.add (() => {
                 try {
-                    for (int i = 0; i < lines.size; i++) GLib.Process.spawn_command_line_async ("xrandr --output " + lines.get (i) + " --brightness " + edited);
-                    //save_value (".dimmer_all_monitors.txt", edited);
-                    if (((int)val / 100.0) > 1.2) knob.tooltip_text = "Too Bright";
-                    else if (((int)val / 100.0) < 0.6) knob.tooltip_text = "Too Dark";
+                    for (int i = 0; i < lines.size; i++) GLib.Process.spawn_command_line_async ("xrandr --output " + lines.get (i) + " --brightness " + val.to_string ());
+                    settings.set_double ("all-monitors-brightness", value);
+                    if (val > 1.2) knob.tooltip_text = "Too Bright";
+                    else if (val < 0.6) knob.tooltip_text = "Too Dark";
                     else knob.tooltip_text = "";
                 } catch (SpawnError se) {}
                 return false;
@@ -274,19 +258,19 @@ public class Sundown : Gtk.Application {
             for (int i = 0; i < lines.size; i++) {
                 if (i == 0) {
                     vbox_ind.add (label1);
-                    vbox_ind.add (slider1);
+                    vbox_ind.add (knob1);
                 }
                 else if (i == 1) {
                     vbox_ind.add (label2);
-                    vbox_ind.add (slider2);
+                    vbox_ind.add (knob2);
                 }
                 else if (i == 2) {
                     vbox_ind.add (label3);
-                    vbox_ind.add (slider3);
+                    vbox_ind.add (knob3);
                 }
                 else if (i == 3) {
                     vbox_ind.add (label4);
-                    vbox_ind.add (slider4);
+                    vbox_ind.add (knob4);
                 }
             }
         }
@@ -300,28 +284,15 @@ public class Sundown : Gtk.Application {
 
     //also, if only 1 monitor exists
     private static void set_value_for_all () {
-        string prev_value;
+        double value = settings.get_double ("all-monitors-brightness");
+        double prev_value = (int)(40 + (110.0 * value)) / 100.0;
 
-        if (FileUtils.test (".dimmer_all_monitors.txt", GLib.FileTest.EXISTS) == true) {
-            try {
-                FileUtils.get_contents (".dimmer_all_monitors.txt", out prev_value);
-            }
-            catch (Error e) {
-                prev_value = "1.00";
-                stderr.printf ("Error: %s\n", e.message);
-            }
-        }
-        else {
-            prev_value = "1.00"; //default
-        }
+        if (prev_value < 0.4) prev_value = 0.4;
+        if (prev_value > 1.5) prev_value = 1.5;
 
-        double dprev_value = double.parse (prev_value);
-        if (dprev_value < 0.4) dprev_value = 0.4;
-        if (dprev_value > 1.5) dprev_value = 1.5;
+        knob.set_value (value);
 
-        slider.adjustment.value = dprev_value * 100;
-
-        string edited = dprev_value.to_string ();
+        string edited = prev_value.to_string ();
 
         try {
             for (int i = 0; i < lines.size; i++) GLib.Process.spawn_command_line_async ("xrandr --output " + lines.get (i) + " --brightness " + edited);
@@ -331,32 +302,20 @@ public class Sundown : Gtk.Application {
     //if more than 1 monitor exists
     private static void set_values_for_every_monitor () {
         for (int i = 0; i < lines.size; i++) {
-            string prev_value;
 
             if (monitors[i] != "") {
-                if (FileUtils.test (".dimmer_" + monitors[i] + ".txt", GLib.FileTest.EXISTS) == true) {
-                    try {
-                        FileUtils.get_contents (".dimmer_" + monitors[i] + ".txt", out prev_value);
-                    }
-                    catch (Error e) {
-                        prev_value = "1.00";
-                        stderr.printf ("Error: %s\n", e.message);
-                    }
-                }
-                else {
-                    prev_value = "1.00"; //default
-                }
+                double value = settings.get_double ("all-monitors-brightness");
+                double prev_value = (int)(40 + (110.0 * value)) / 100.0;
 
-                double dprev_value = double.parse (prev_value);
-                if (dprev_value < 0.4) dprev_value = 0.4;
-                if (dprev_value > 1.5) dprev_value = 1.5;
+                if (prev_value < 0.4) prev_value = 0.4;
+                if (prev_value > 1.5) prev_value = 1.5;
 
-                if (i == 0) slider1.adjustment.value = dprev_value * 100;
-                else if (i == 1) slider2.adjustment.value = dprev_value * 100;
-                else if (i == 2) slider3.adjustment.value = dprev_value * 100;
-                else if (i == 3) slider4.adjustment.value = dprev_value * 100;
+                if (i == 0) knob1.set_value (value);
+                else if (i == 1) knob2.set_value (value);
+                else if (i == 2) knob3.set_value (value);
+                else if (i == 3) knob4.set_value (value);
 
-                string edited = dprev_value.to_string ();
+                string edited = prev_value.to_string ();
 
                 try {
                     GLib.Process.spawn_command_line_async ("xrandr --output " + monitors[i] + " --brightness " + edited);
@@ -365,12 +324,21 @@ public class Sundown : Gtk.Application {
         }
     }
 
-    private static void save_value (string filename, string value_to_save) {
-        try {
-            FileUtils.set_contents (filename, value_to_save);
-        }
-        catch (Error e) {
-            stderr.printf ("Error: %s\n", e.message);
+    //  private static void save_value (string filename, string value_to_save) {
+    //      try {
+    //          FileUtils.set_contents (filename, value_to_save);
+    //      }
+    //      catch (Error e) {
+    //          stderr.printf ("Error: %s\n", e.message);
+    //      }
+    //  }
+
+    private void init_theme () {
+        GLib.Value value = GLib.Value (GLib.Type.STRING);
+        Gtk.Settings.get_default ().get_property ("gtk-theme-name", ref value);
+        if (!value.get_string ().has_prefix ("io.elementary.")) {
+            Gtk.Settings.get_default ().set_property ("gtk-icon-theme-name", "elementary");
+            Gtk.Settings.get_default ().set_property ("gtk-theme-name", "io.elementary.stylesheet.blueberry");
         }
     }
 

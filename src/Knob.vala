@@ -119,6 +119,9 @@ public class Knob : Gtk.Overlay {
         value = 15 * _value + 27;
         double px = RADIUS * GLib.Math.cos (value / Math.PI);
         double py = RADIUS * GLib.Math.sin (value / Math.PI);
+        if (value == 35.2) {
+            knob_rim.get_style_context ().add_class ("knob-rim-hidden");
+        }
         fixed.move (knob_socket_graphic, (int)(px + center), (int)(py + center));
     }
 
