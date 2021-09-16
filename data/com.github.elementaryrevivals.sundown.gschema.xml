@@ -4,23 +4,23 @@
     <schema path="/com/github/elementaryrevivals/sundown/" id="com.github.elementaryrevivals.sundown"
     gettext-domain="com.github.elementaryrevivals.sundown">
         <key name="all-monitors-brightness" type="d">
-            <default>1.0</default>
+            <default>0.54666666666666686</default>
             <summary>Brightness settings of all monitors</summary>
 	    </key>
         <key name="monitors-1-brightness" type="d">
-            <default>1.0</default>
+            <default>0.54666666666666686</default>
             <summary>Brightness settings for specific monitor</summary>
 	    </key>
         <key name="monitors-2-brightness" type="d">
-            <default>1.0</default>
+            <default>0.54666666666666686</default>
             <summary>Brightness settings for specific monitor</summary>
 	    </key>
         <key name="monitors-3-brightness" type="d">
-            <default>1.0</default>
+            <default>0.54666666666666686</default>
             <summary>Brightness settings for specific monitor</summary>
 	    </key>
         <key name="monitors-4-brightness" type="d">
-            <default>1.0</default>
+            <default>0.54666666666666686</default>
             <summary>Brightness settings for specific monitor</summary>
 	    </key>
     </schema>
