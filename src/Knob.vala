@@ -20,10 +20,12 @@
 public class Knob : Gtk.Overlay {
     public string tooltip;
     public bool dragging;
-    private double dragging_direction;
+    private double dragging_direction_x;
+    private double dragging_direction_y;
+    bool locked;
 
     public double value = 27;
-    public int initial_value = 0;
+    public int drag_force = 0;
     protected Gtk.Box knob_socket_graphic;
     protected Gtk.Box knob_cover;
     protected Gtk.Box knob_background;
@@ -134,56 +136,66 @@ public class Knob : Gtk.Overlay {
         //  }
         if (event.type == Gdk.EventType.BUTTON_PRESS) {
             dragging = true;
-            initial_value = 0;
+            drag_force = 0;
         }
         if (event.type == Gdk.EventType.BUTTON_RELEASE) {
             dragging = false;
-            dragging_direction = 0;
+            dragging_direction_x = 0;
+            dragging_direction_y = 0;
         }
 
         if (event.type == Gdk.EventType.MOTION_NOTIFY && dragging) {
-            if (dragging_direction == 0) {
-                dragging_direction = event.motion.y - event.motion.x;
+            if (dragging_direction_x == 0) {
+                dragging_direction_x = event.motion.x;
             }
-            if (dragging_direction > event.motion.y - event.motion.x ||
-                event.motion.y_root == 0 ||
-                event.motion.x_root == 0) {
-                value += 0.5;
-                initial_value += 1;
-                if (value < 27) {
-                    value = 27;
+            if (dragging_direction_y == 0) {
+                dragging_direction_y = event.motion.y;
+            }
+            double delta = 0.0;
+            if (dragging_direction_x > event.motion.x || event.motion.x_root == 0) {
+                delta -= 0.1 * (dragging_direction_x - event.motion.x);
+                if (locked) {
+                    drag_force += 1;
                 }
-                if (value > 42) {
-                    value = 42;
-                }
-                if (value > 33 && value < 37 && initial_value < 10) {
-                    value = 35.2;
-                    knob_rim.get_style_context ().add_class ("knob-rim-hidden");
-                    rotate_dial (value);
-                } else {
-                    knob_rim.get_style_context ().remove_class ("knob-rim-hidden");
-                    rotate_dial (value);
-                }
-                dragging_direction = event.motion.y - event.motion.x;
+                dragging_direction_x = event.motion.x;
             } else {
-                value -= 0.5;
-                initial_value -= 1;
-                if (value < 27) {
-                    value = 27;
+                delta += 0.1 * (event.motion.x - dragging_direction_x);
+                if (locked) {
+                    drag_force -= 1;
                 }
-                if (value > 42) {
-                    value = 42;
-                }
-                if (value > 33 && value < 37 && initial_value > -10) {
-                    value = 35.2;
-                    knob_rim.get_style_context ().add_class ("knob-rim-hidden");
-                    rotate_dial (value);
-                } else {
-                    knob_rim.get_style_context ().remove_class ("knob-rim-hidden");
-                    rotate_dial (value);
-                }
-                dragging_direction = event.motion.y - event.motion.x;
+                dragging_direction_x = event.motion.x;
             }
+            if (dragging_direction_y > event.motion.y || event.motion.y_root == 0) {
+                delta += 0.1 * (dragging_direction_y - event.motion.y);
+                if (locked) {
+                    drag_force += 1;
+                }
+                dragging_direction_y = event.motion.y;
+            } else {
+                delta -= 0.1 * (event.motion.y - dragging_direction_y);
+                if (locked) {
+                    drag_force -= 1;
+                }
+                dragging_direction_y = event.motion.y;
+            }
+            value += delta;
+            if (value < 27) {
+                value = 27;
+            }
+            if (value > 42) {
+                value = 42;
+            }
+            if (value > 33.5 && value < 36.5 && !locked) {
+                value = 35.2;
+                locked = true;
+                knob_rim.get_style_context ().add_class ("knob-rim-hidden");
+            } else {
+                knob_rim.get_style_context ().remove_class ("knob-rim-hidden");
+            }
+            if (drag_force < -1 || drag_force > 1) {
+                locked = false;
+            }
+            rotate_dial (value);
         }
         return false;
     }
