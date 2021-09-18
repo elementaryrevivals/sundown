@@ -33,7 +33,7 @@ jobs:
         uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v3
         with:
           bundle: sundown.flatpak
-          manifest-path: com.github.elementaryrevivals.sundown.yml
+          manifest-path: com.github.watsonprojects.sundown.yml
           run-tests: true
           repository-name: appcenter
           repository-url: https://flatpak.elementary.io/repo.flatpakrepo
