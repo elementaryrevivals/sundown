@@ -1,7 +1,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/watsonprojects/sundown/blob/master/LICENSE)
 
 <p align="center">
-<img src="https://github.com/watsonprojects/sundown/blob/master/icons/128/com.github.watsonprojects.sundown.svg" alt="logo"> <br>
+<img src="https://raw.githubusercontent.com/watsonprojects/sundown/master/data/com.github.watsonprojects.sundown.svg" alt="logo"> <br>
 </p>
 
 <div>
@@ -10,7 +10,7 @@
 </div>
 
 <p align="center">
-  <img src="https://github.com/watsonprojects/sundown/blob/master/data/screenshot.png" alt="Screenshot"> <br>
+  <img src="https://raw.githubusercontent.com/watsonprojects/sundown/master/data/screenshot.png" alt="Screenshot"> <br>
 </p>
 
 Instead of adjusting the backlight, this app uses `xrandr` to change the brightness of the image displayed on your screen. This can be useful for displays without an adjustable backlight, displays with a too-bright minimum, or too-dark maximum backlight, or OLED displays. Setups with multipe displays (maximum 4 displays) can also be adjusted with different brightness levels.
