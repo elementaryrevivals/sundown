@@ -1,12 +1,12 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the com.github.elementaryrevivals.sundown package.
+# This file is distributed under the same license as the com.github.watsonprojects.sundown package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: com.github.elementaryrevivals.sundown\n"
+"Project-Id-Version: com.github.watsonprojects.sundown\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 07:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -17,20 +17,20 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:6
-#: data/com.github.elementaryrevivals.sundown.desktop.in:3
+#: data/com.github.watsonprojects.sundown.appdata.xml.in:6
+#: data/com.github.watsonprojects.sundown.desktop.in:3
 msgid "Sundown"
 msgstr ""
 
-#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:7
+#: data/com.github.watsonprojects.sundown.appdata.xml.in:7
 msgid "Elementary Revivals"
 msgstr ""
 
-#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:20
+#: data/com.github.watsonprojects.sundown.appdata.xml.in:20
 msgid "Change screen's brightness"
 msgstr ""
 
-#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:22
+#: data/com.github.watsonprojects.sundown.appdata.xml.in:22
 msgid ""
 "Instead of adjusting the backlight, this app uses `xrandr` to change the "
 "brightness of the image displayed on your screen. This can be useful for "
@@ -40,23 +40,23 @@ msgid ""
 "brightness levels."
 msgstr ""
 
-#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:33
+#: data/com.github.watsonprojects.sundown.appdata.xml.in:33
 msgid "added auto-save for brightness preferences"
 msgstr ""
 
-#: data/com.github.elementaryrevivals.sundown.appdata.xml.in:34
+#: data/com.github.watsonprojects.sundown.appdata.xml.in:34
 msgid "small bugs fixed"
 msgstr ""
 
-#: data/com.github.elementaryrevivals.sundown.desktop.in:4
+#: data/com.github.watsonprojects.sundown.desktop.in:4
 msgid "Brightness Adjustment"
 msgstr ""
 
-#: data/com.github.elementaryrevivals.sundown.desktop.in:7
-msgid "com.github.elementaryrevivals.sundown"
+#: data/com.github.watsonprojects.sundown.desktop.in:7
+msgid "com.github.watsonprojects.sundown"
 msgstr ""
 
-#: data/com.github.elementaryrevivals.sundown.desktop.in:10
+#: data/com.github.watsonprojects.sundown.desktop.in:10
 msgid ""
 "brightness;screen;monitor;change;light;eyes;dimmer;switch;OLED;backlight;"
 "display;xrandr;bright;multipe-monitors;dual-monitors;"

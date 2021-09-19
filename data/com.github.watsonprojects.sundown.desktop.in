@@ -2,8 +2,8 @@
 Name=Sundown
 Comment=Brightness Adjustment
 Categories=GTK;System;Utility;
-Exec=com.github.elementaryrevivals.sundown
-Icon=com.github.elementaryrevivals.sundown
+Exec=com.github.watsonprojects.sundown
+Icon=com.github.watsonprojects.sundown
 Terminal=false
 Type=Application
 Keywords=brightness;screen;monitor;change;light;eyes;dimmer;switch;OLED;backlight;display;xrandr;bright;multipe-monitors;dual-monitors;

@@ -34,7 +34,7 @@ public class Sundown : Gtk.Application {
 
      public Sundown () {
         Object (
-            application_id: "com.github.elementaryrevivals.sundown",
+            application_id: "com.github.watsonprojects.sundown",
             flags: ApplicationFlags.FLAGS_NONE
         );
     }

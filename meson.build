@@ -1,6 +1,6 @@
 # Project name, programming language and version
 project (
-    'com.github.elementaryrevivals.sundown',
+    'com.github.watsonprojects.sundown',
     'vala', 'c',
     version: '0.0.1'
 )
