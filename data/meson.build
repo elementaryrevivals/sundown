@@ -32,7 +32,7 @@ i18n.merge_file (
 )
 
 install_data(
-    'com.github.elementaryrevivals.sundown.gschema.xml',
+    'com.github.watsonprojects.sundown.gschema.xml',
     rename: meson.project_name() + '.gschema.xml',
     install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
 )

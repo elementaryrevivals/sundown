@@ -40,7 +40,7 @@ public class Sundown : Gtk.Application {
     }
 
     protected override void activate () {
-        settings = new GLib.Settings ("com.github.elementaryrevivals.sundown");
+        settings = new GLib.Settings ("com.github.watsonprojects.sundown");
         init_theme ();
         Gtk.Settings gsettings = Gtk.Settings.get_default ();
         gsettings.gtk_application_prefer_dark_theme = false;
@@ -51,7 +51,7 @@ public class Sundown : Gtk.Application {
         header_bar.set_title ("Sundown");
         if (css_provider == null) {
             css_provider = new Gtk.CssProvider ();
-            css_provider.load_from_resource ("/com/github/elementaryrevivals/sundown/Application.css");
+            css_provider.load_from_resource ("/com/github/watsonprojects/sundown/Application.css");
             // CSS Provider
             Gtk.StyleContext.add_provider_for_screen (
                 Gdk.Screen.get_default (),

@@ -1,8 +1,8 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-    <schema path="/com/github/elementaryrevivals/sundown/" id="com.github.elementaryrevivals.sundown"
-    gettext-domain="com.github.elementaryrevivals.sundown">
+    <schema path="/com/github/watsonprojects/sundown/" id="com.github.watsonprojects.sundown"
+    gettext-domain="com.github.watsonprojects.sundown">
         <key name="all-monitors-brightness" type="d">
             <default>0.54666666666666686</default>
             <summary>Brightness settings of all monitors</summary>

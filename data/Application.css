@@ -21,7 +21,7 @@ window  {
     margin: 6px
 }
 .knob-meter-graphic {
-	background-image:url("resource://com/github/elementaryrevivals/sundown/images/knob_meter.svg");
+	background-image:url("resource://com/github/watsonprojects/sundown/images/knob_meter.svg");
     background-size: 132px;
     background-position: center center;
 }
