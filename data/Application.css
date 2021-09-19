@@ -1,0 +1,46 @@
+window  {
+    background-image:linear-gradient(#eef0f2, #a7b3c1);
+}
+.flat {
+    background-color: #eef0f2;
+}
+.knob-socket-graphic {
+    background-image:linear-gradient(alpha(#56626f, 0.5), alpha(#aebac6, 0.5), alpha(#fff, 0.5));
+    border-radius: 50%;
+    margin-left: -2px;
+    margin-top: -2px;
+    margin-right: 2px;
+    margin-bottom: 2px
+}
+.knob-cover-graphic {
+    background-image:linear-gradient(#e6eaed, #abb8c4);
+    border: 1px solid #56626f;
+    box-shadow: inset 0 1px 0 alpha(#fff, 0.7), inset 0 -1px 0 alpha(#56626f, 0.9),
+	0 2px 4px alpha(#000, 0.5), 0 -3px 4px alpha(#fff, 1.0);
+    border-radius: 50%;
+    margin: 6px
+}
+.knob-meter-graphic {
+	background-image:url("resource://com/github/watsonprojects/sundown/images/knob_meter.svg");
+    background-size: 132px;
+    background-position: center center;
+}
+.knob-meter-label {
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+    color: #677892;
+    font-weight: 700;
+    text-shadow: 0 1px alpha(#fff, 0.5);
+}
+.knob-rim {
+	border: 1px solid shade(@accent_color, 1.3);
+	box-shadow: 0 0 4px @accent_color, 0 0 0 1px alpha(@accent_color, 0.2), inset 0 0 1px 1px @accent_color;
+	border-radius: 50%;
+	margin: 6px;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+.knob-rim-hidden {
+    opacity: 0;
+}

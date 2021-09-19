@@ -30,3 +30,9 @@ i18n.merge_file (
     install: true,
     install_dir: join_paths (get_option ('datadir'), 'metainfo')
 )
+
+install_data(
+    'com.github.watsonprojects.sundown.gschema.xml',
+    rename: meson.project_name() + '.gschema.xml',
+    install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
+)
